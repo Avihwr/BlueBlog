@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}BlueBlog | Home{% endblock title %}
+{% block homeactive %}active{% endblock homeactive %}
+{% block header %}
+    <section class="jumbotron jumbotron-fluid bg-dark">
+
+    <div class="jumbotron-background">
+        <img src="/static/img/nature%20(1).jpg" class="blur" alt="supposed to be a nature pic here">
+    </div>
+
+    <div class="container text-white">
+
+        <h1 class="display-4" style="color:#000000;">Welcome To <span style="color: blueviolet;">BlueBlog.</span></h1>
+        <p class="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
+            live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+            language ocean.</p>
+        <hr class="my-4">
+        <p>Created and designed by Avi Gupta.</p>
+
+    </div>
+    </section>
+{% endblock header %}
+
+{% block body %}
+    <h3 class="text-center" style="font-family:'Poppins', monospace; color: #5383d3; margin-bottom: 15px;">Popular Posts:</h3>
+
+    {% for Big in index %}
+     <body>
+
+<div class="jumbotron text-center hoverable p-4">
+
+
+  <div class="row">
+
+
+    <div class="col-md-4 offset-md-1 mx-3 my-3">
+
+
+      <div class="view overlay">
+        <img src="{{ Big.image.url}}" class="img-fluid" alt=" blog listing">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="col-md-7 text-md-left ml-3 mt-3">
+
+      <!-- Excerpt -->
+      <a href="#" class="green-text" style="text-decoration: none;">
+        <h6 class="h6 pb-1"><i class="fa fa-{{ Big.excerpt_type }} pr-1"></i> {{ Big.tag | capfirst }}</h6>
+      </a>
+
+      <h4 class="h4 mb-4">{{ Big.title}}</h4>
+
+      <p class="font-weight-normal">{{ Big.content | slice:250 | safe}}...</p>
+      <p class="font-weight-normal">by <a><strong>{{ Big.username}}</strong></a>, {{ Big.time}}</p>
+
+      <a href="/posts/{{ Big.slug }}" class="btn btn-success">Read more</a>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+</body>
+
+
+{% endfor %}
+{% endblock body %}

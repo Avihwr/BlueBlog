@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}BlueBlog &copy;{% endblock title %}
+{% block blogactive %}active{% endblock blogactive %}
+{% block body %}
+
+        <div class="container">
+
+            <div class="row">
+
+                <!-- Blog Entries Column -->
+                <div class="col-md-8" style="align-content:space-evenly;">
+                    <h1 class="my-4">Welcome to BlueBlogs
+                    </h1>
+
+                    <!-- Blog Post -->
+                    {% for Blog in page %}
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="/media/{{ Blog.image | default_if_none:'/static/img/900x300.png' }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h2 class="card-title"><a class="text-dark" href="/posts/{{ Blog.slug }}">{{ Blog.title }}</a></h2>
+                            <p class="card-text">{{ Blog.content | slice:245 | safe }}...</p>
+                            <a href="/posts/{{ Blog.slug }}" class="btn btn-primary">Read More &rarr;</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ Blog.time }} by
+                            <a href="#">{{ Blog.username }}</a>
+                            <a href="#" class="green-text float-right" style="text-decoration: none;">
+                                <p class="h6 pb-1"><i class="fa fa-{{ Blog.excerpt_type.excerpt}} pr-1"></i> {{Blog.tag | capfirst}}</p></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation example" >
+
+    <ul class="pagination">
+
+        <li class="page-item">
+
+            {% if page.has_previous %}
+            <a class="page-link" href="?page={{page.previous_page_number}}">Previous</a>
+
+            {% endif %}
+
+        </li>
+
+        <li class="page-item">
+
+            <a class="page-link">Page {{page.number}} of {{page.paginator.num_pages}}</a>
+
+        </li>
+
+
+    <li class="page-item">
+
+            {% if page.has_next %}
+            <a class="page-link" href="?page={{page.next_page_number}}">Next</a>
+
+            {% endif %}
+
+        </li>
+
+
+    </ul>
+
+
+
+</nav>
+
+                </div>
+
+                <!-- Sidebar Widgets Column -->
+                <div class="col-md-4">
+
+                    <!-- Search Widget -->
+                    <div class="card my-4">
+                        <h5 class="card-header" style="background-color: skyblue">Search</h5>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="search" id="query" name="query" placeholder="Search for..."
+                                           aria-label="Search">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Categories Widget -->
+                    <div class="card my-4">
+                        <h5 class="card-header" style="background-color: skyblue">Categories</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <ul class="list-unstyled mb-0">
+                                        {% for post in blog %}
+                                        <li>
+                                            <a href="/search/?query={{ post.tag }}">{{ post.tag}}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <ul class="list-unstyled mb-0">
+                                        {% for post in blog1 %}
+                                        <li>
+                                            <a href="/search/?query={{ post.tag }}">{{ post.tag | capfirst}}</a>
+                                        </li>
+                                         {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Widget -->
+                    <div class="card my-4">
+                        <h5 class="card-header" style="background-color: skyblue" >Featured Posts:</h5>
+                        <div class="card-body float-right">
+                            {% for post in Blogs %}
+                          <h6>{{ forloop.counter }}.<a href="/posts/{{ post.slug }}" style="text-decoration: none; color: #5383d3;"> {{ post.title | linebreaks}}</a></h6>
+                                <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+
+
+
+
+
+
+{% endblock body %}

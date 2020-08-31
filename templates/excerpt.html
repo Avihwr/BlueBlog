@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}BlueBlog | Upload{% endblock title %}
+{% block body %}
+    <h5 class="float-center" style="margin-left: 500px; margin-top: 20px; margin-bottom: 20px; margin-right: 500px;" ><strong>Note:</strong> Add Excerpts or Tags related to <strong style="color: blue">Font Awesome v4.7</strong> only</h5>
+    <form action="." method="post" style="margin-left: 500px; margin-top: 20px; margin-bottom: 20px; margin-right: 500px;" >
+    {% csrf_token %}
+    {{ tag_form | crispy }}
+    <input type="submit" value="Upload this tag?" class="btn" style="color: blueviolet;">
+    </form>
+
+{% endblock body %}

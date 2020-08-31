@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}BlueBlog | Profile{% endblock title %}
+{% block body %}
+    <div class="float-left ml-5">
+    {% if user.profile.photo %}
+   <img style="width: 300px; height: 300px; background-size:auto 100%; margin-left: 70px;" src="{{ user.profile.photo.url|default_if_none:'/static/img/img3.png'  }}" alt="sad">
+    {% else %}
+       <img style="width: 200px; height: 200px; background-size:auto 100%; margin-left: 70px;" src='/static/img/img3.png'  alt="sad">
+    {% endif %}
+    </div>
+    <form action="." method="post" enctype="multipart/form-data" style="margin-left: 500px; margin-top: 20px; margin-bottom: 20px; margin-right: 500px;" >
+    {% csrf_token %}
+        {{ user_form | crispy }}
+        {{ profile_form | crispy}}
+    <input type="submit" value="Save changes" class="btn" style="color: blueviolet;">
+</form>
+
+{% endblock body %}

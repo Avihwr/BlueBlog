@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}BlueBlog | Create an account{% endblock title %}
+{% load crispy_forms_filters %}
+{% block registeractive %}active{% endblock registeractive %}
+{% block body %}
+    <h1 class="text-center mt-2" style="color: #292c2f">Create Your <span style="color:#000;">Blue</span><span style="color: blueviolet">Blog</span> Account</h1>
+<form method="post" class="form-group" style="width: 30%; margin-left: 530px; margin-top: 50px; ">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-info">Register</button>
+</form>
+{% endblock body %}
+

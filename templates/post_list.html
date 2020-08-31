@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}BlueBlog | Upload{% endblock title %}
+{% block body %}
+    {% for post in posts %}
+
+            <div class="list">
+                <ul class="list-group">
+                    <li class="list-group-item">{{ post.title }} >>
+                        <a href="{% url "post_delete" slug=post.slug %}" class="btn btn-danger float-right mx-3">Delete
+                            &rarr;</a>
+                        <a href="/post_edit/{{ post.pk }}" class="btn btn-primary float-right">Edit &rarr;</a>
+                </ul>
+            </div>
+        {% empty %}
+            <h4 class="text-center">You dont have any posts right now <i class="far fa-frown-open"></i></h4>
+        <i class="fas fa-arrow-down fa-5x" style="margin-left: 715px; margin-top: 20px"></i>
+            <a href="/post_upload" class="btn btn-primary" style="margin-left: 690px; margin-top: 50px">Create one?</a>
+
+    {% endfor %}
+{% endblock body %}
+
+

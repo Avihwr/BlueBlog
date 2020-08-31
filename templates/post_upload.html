@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}BlueBlog | Upload{% endblock title %}
+{% block body %}
+    <form action="." method="post" enctype="multipart/form-data" style="margin-left: 500px; margin-top: 20px; margin-bottom: 20px; margin-right: 500px;" >
+    {% csrf_token %}
+        {{ post_form.media }}
+        {{ post_form | crispy }}
+    <input type="submit" value="Save changes" class="btn" style="color: blueviolet;">
+</form>
+
+{% endblock body %}

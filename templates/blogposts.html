@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}BlueBlog | Posts{% endblock title %}
+{% block blogactive %}active{% endblock blogactive %}
+{% block body %}
+    {% load humanize %}
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Title -->
+                <h1 class="mt-4">{{ Blog.title }}</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by
+                    <a href="#">{{ Blog.username }}</a> (<span>{{ Blog.views }} views</span>)
+                    <a href="#" class="green-text float-left" style="margin-bottom: 5px; text-decoration: none;">
+                                <h6 class="h6 pb-1"><i class="fa fa-{{ Blog.excerpt_type.excerpt}} pr-1"></i> {{Blog.tag | capfirst}}</h6></a>
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p>{{ Blog.time }}</p>
+
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-fluid rounded" src="/media/{{ Blog.image|default_if_none:'/static/img/900x300.png'  }}" alt="">
+
+                <hr>
+
+                <!-- Post Content -->
+                <div class="row">
+                    {{ Blog.content | safe }}
+                </div>
+
+                <hr>
+                <!-- Comments Form -->
+                {% if user.is_authenticated %}
+                    <div class="card my-4">
+                        <h5 class="card-header">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="parentSno" value=" ">
+                                {{ form | crispy }}
+                                <input type="submit" value="Submit" class="btn btn-primary">
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card my-4">
+                        <h5 class="card-header">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <input type="submit" value="Submit" class="btn btn-primary" disabled>
+                                <button type="button" class="btn btn-primary mx-2" style="color: white;"
+                                        data-toggle="modal" data-target="#loginModal">
+                                    Login to comment
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <h3 class="mb-4">Comments ({{ comments.count }})</h3>
+
+                {% for comment in comments %}
+                    <!-- Single Comment -->
+                    <div class="float-left">
+                        <img class="d-flex mr-3 rounded-circle"
+                             style="width: 50px; height: 50px; background-size:auto 100%;"
+                             src="{{ comment.user.profile.photo_url|default_if_none:'/static/img/img3.png' }}" alt="">
+                    </div>
+                    <blockquote class="blockquote text-left">
+                        <p class="mb-0">{{ comment.comment }}</p>
+                        <footer class="blockquote-footer">by <cite
+                                title="Source Title">{{ comment.user.username | capfirst }}</cite> <span
+                                style="font-size: x-small;">{{ comment.time | naturaltime }}</span></footer>
+
+                    </blockquote>
+                    <div class="replies mt-2">
+                        {% for reply in comment.replies.all %}
+                            <img class="d-flex mr-3 rounded-circle float-left"
+                                 style="width: 50px; height: 50px; background-size:auto 100%; margin-left: 70px;"
+                                 src="{{ reply.user.profile.photo_url|default_if_none:'/static/img/img3.png' }}"
+                                 alt="">
+                            <blockquote class="blockquote text-left" style="margin-left: 60px;">
+                                <p class="mb-0">{{ reply.comment }}</p>
+                                <footer class="blockquote-footer">by <cite
+                                        title="Source Title">{{ reply.user.username | capfirst }}</cite> <span
+                                        style="font-size: x-small;">{{ reply.time | naturaltime }}</span></footer>
+                            </blockquote>
+                        {% endfor %}
+                        {% if user.is_authenticated %}
+                            <div class="form-group row">
+                                <div class="card my-4" style="margin-left: 60px;">
+                                    <h5 class="card-header">Reply to this comment:</h5>
+                                    <div class="card-body">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="parentSno" value="{{ comment.sno }}">
+                                            {{ form | crispy }}
+                                            <input type="submit" value="Reply" class="btn btn-primary">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#">Web Design</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">HTML</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Freebies</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#">JavaScript</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">CSS</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Tutorials</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Side Widget</h5>
+                    <div class="card-body">
+                        You can put anything you want inside of these side widgets. They are easy to use, and feature
+                        the new Bootstrap 4 card containers!
+                    </div>
+                </div>
+                <hr>
+                <div class="author my-2">
+                    <img style="width: 100px; height: 100px; background-size:auto 100%;"
+                         {% if user.profile.photo is None %}
+                         src='/static/img/img3.png'>
+                            {% else %}
+                         src="{{ user.profile.photo_url|default_if_none:'/static/img/img3.png' }}">
+                    {% endif %}
+                    <p class="mt-1">by {{ Blog.username }}</p>
+                    <time class="mt-4" style="border-top: 1px solid blueviolet ">{{ Blog.time | naturaltime }}</time>
+
+
+
+                </div>
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+    </div>
+{% endblock body %}

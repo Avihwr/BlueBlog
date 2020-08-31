@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}BlueBlog | Contact{% endblock title %}
+{% block contactsactive %}active{% endblock contactsactive %}
+{% block body %}
+    <h2 style="text-align: center; margin-top: 20px; font-family: monospace,cursive;">Contact Us</h2>
+    <form action="/contact/" method="post" style="margin-left: 500px; margin-top: 20px;">
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="Name">Your Name</label>
+    <input type="text" class="form-control" style="width: 50%;" id="name" name="name" placeholder="Enter Your Name Here">
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control"  style="width: 50%;" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="desc">How may we help you?</label>
+    <textarea class="form-control" style="width: 50%;" id="desc" name="desc" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary my-3">Submit</button>
+</form>
+
+{% endblock body %}
