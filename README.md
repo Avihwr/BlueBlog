@@ -9,6 +9,7 @@ http://blueblog1.pythonanywhere.com/
 * User Login & Logout
 * User Profile
 * Fully featured RichTextEditor included
+* Give feedback
 * Add your images to your profile
 * Create, Update, Edit & Delete Posts
 * Comments
