@@ -1,7 +1,7 @@
 # BlueBlog
 Django based blog with features like authentication, and CRUD operations
 
-# Try Yourself
+# Try Yourself( Not Responsive yet )
 http://blueblog1.pythonanywhere.com/
 
 # Features
@@ -45,7 +45,7 @@ $ python manage.py createsuperuser
 $ python manage.py runserver
 ```
 
-$ Andd thats it!!
+Andd thats it!!
 
 
 
