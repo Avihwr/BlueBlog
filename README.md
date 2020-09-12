@@ -1,7 +1,7 @@
 # BlueBlog
 Django based blog with features like authentication, and CRUD operations
 
-# Try Yourself( Not Responsive yet )
+# Try Yourself( Not Fully Responsive Yet )
 http://blueblog1.pythonanywhere.com/
 
 # Features
